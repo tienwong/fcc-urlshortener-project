@@ -11,14 +11,15 @@ app.use(cors());
 
 app.use('/public', express.static(`${process.cwd()}/public`));
 
-app.use(bodyParser.text({ type: 'text/html' }))
+const urlEncodedParser = bodyParser.urlencoded({ extended: true })
 
 app.get('/', function(req, res) {
   res.sendFile(process.cwd() + '/views/index.html');
 });
 
-app.post('/api/shorturl', (req, res) => {
-  res.send({ message: 'You have reached the POST endpoint!'})
+app.post('/api/shorturl', urlEncodedParser, (req, res) => {
+  // dummy implementation just to make sure this is working right
+  res.send({ original_url: req.body.url, short_url: 'for right now this is just something random!' })
 })
 
 // Your first API endpoint
